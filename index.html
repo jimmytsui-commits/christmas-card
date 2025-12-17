@@ -14,7 +14,7 @@
             font-family: 'Arial', sans-serif;
         }
 
-        /* 落雪容器（全程顯示） */
+        /* 落雪容器 */
         #snow-container {
             position: fixed;
             top: 0; left: 0;
@@ -40,7 +40,7 @@
             }
         }
 
-        /* 聖誕樹背景 - 完整顯示 */
+        /* 聖誕樹背景 */
         #tree-screen {
             position: fixed;
             top: 0; left: 0;
@@ -51,7 +51,7 @@
             z-index: 5;
         }
 
-        /* 心意卡背景 - 完整顯示 */
+        /* 心意卡背景 */
         #card-screen {
             position: fixed;
             top: 0; left: 0;
@@ -63,7 +63,7 @@
             z-index: 6;
         }
 
-        /* 可點擊區域（涵蓋禮物盒） */
+        /* 可點擊區域（禮物盒） */
         #click-area {
             position: fixed;
             top: 55%;
@@ -75,29 +75,47 @@
             z-index: 7;
         }
 
-        /* 提示文字（可點擊，位置精調） */
+        /* 提示文字容器（兩行，分開置中於白色禮物盒上方） */
         #hint {
             position: fixed;
             top: 48%;  /* 電腦預設位置 */
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.4);
+            text-align: center;
             color: #fff;
-            padding: 12px 25px;
-            border-radius: 12px;
-            font-size: 1.5em;
             font-weight: bold;
             text-shadow: 3px 3px 6px #000;
             z-index: 8;
+            cursor: pointer;
+            line-height: 1.4;
             transition: opacity 1s ease;
-            cursor: pointer;  /* 顯示可點擊游標 */
         }
 
-        /* 手機直向模式微調文字位置（更準確對齊禮物盒上方） */
+        #hint span {
+            display: block;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 8px 20px;
+        }
+
+        #hint .line1 {
+            font-size: 1.5em;
+        }
+
+        #hint .line2 {
+            font-size: 1.8em;  /* gift box 稍大，突出重點 */
+        }
+
+        /* 手機直向模式微調 */
         @media (max-width: 768px) {
             #hint {
                 top: 50%;
+            }
+            #hint .line1 {
                 font-size: 1.4em;
+            }
+            #hint .line2 {
+                font-size: 1.7em;
             }
             #click-area {
                 top: 56%;
@@ -121,7 +139,13 @@
     <div id="tree-screen"></div>
     <div id="card-screen"></div>
     <div id="click-area"></div>
-    <div id="hint">Click the gift box</div>
+
+    <!-- 兩行提示文字（可點擊） -->
+    <div id="hint">
+        <span class="line1">Click the</span>
+        <span class="line2">gift box</span>
+    </div>
+
     <div id="snow-container"></div>
 
     <script>
@@ -136,13 +160,12 @@
             hint.classList.add('hidden');
             cardScreen.classList.add('visible');
 
-            // 移除事件，避免重複觸發
             clickArea.removeEventListener('click', switchToCard);
             hint.removeEventListener('click', switchToCard);
         }
 
         clickArea.addEventListener('click', switchToCard);
-        hint.addEventListener('click', switchToCard);  // 文字也可點擊切換
+        hint.addEventListener('click', switchToCard);
 
         function createSnowflake() {
             const snowflake = document.createElement('div');
