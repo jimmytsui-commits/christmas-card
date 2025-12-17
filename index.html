@@ -75,10 +75,10 @@
             z-index: 7;
         }
 
-        /* 提示文字容器（兩行，分開置中於白色禮物盒上方） */
+        /* 提示文字容器（單一背景框，兩行統一字體大小） */
         #hint {
             position: fixed;
-            top: 48%;  /* 電腦預設位置 */
+            top: 45%;  /* 電腦預設位置（禮物盒上方） */
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
@@ -87,35 +87,31 @@
             text-shadow: 3px 3px 6px #000;
             z-index: 8;
             cursor: pointer;
-            line-height: 1.4;
             transition: opacity 1s ease;
+            width: 80%;  /* 限制寬度，避免過寬 */
+            max-width: 400px;
         }
 
-        #hint span {
+        #hint .text-box {
+            background: rgba(0, 0, 0, 0.4);  /* 單一透明灰色背景 */
+            border-radius: 15px;
+            padding: 15px 25px;
+            display: inline-block;
+        }
+
+        #hint .line {
             display: block;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 12px;
-            padding: 8px 20px;
+            font-size: 1.6em;  /* 兩行統一大小 */
+            line-height: 1.4;
         }
 
-        #hint .line1 {
-            font-size: 1.5em;
-        }
-
-        #hint .line2 {
-            font-size: 1.8em;  /* gift box 稍大，突出重點 */
-        }
-
-        /* 手機直向模式微調 */
-        @media (max-width: 768px) {
+        /* 針對 iPhone 等手機直向模式上移位置 */
+        @media (max-width: 768px) or (orientation: portrait) {
             #hint {
-                top: 50%;
+                top: 42%;  /* 在 iPhone 16 Pro Max 等手機上上移，避免位置過低 */
             }
-            #hint .line1 {
-                font-size: 1.4em;
-            }
-            #hint .line2 {
-                font-size: 1.7em;
+            #hint .line {
+                font-size: 1.5em;
             }
             #click-area {
                 top: 56%;
@@ -140,10 +136,12 @@
     <div id="card-screen"></div>
     <div id="click-area"></div>
 
-    <!-- 兩行提示文字（可點擊） -->
+    <!-- 兩行文字（單一背景框） -->
     <div id="hint">
-        <span class="line1">Click the</span>
-        <span class="line2">gift box</span>
+        <div class="text-box">
+            <span class="line">Click the</span>
+            <span class="line">gift box</span>
+        </div>
     </div>
 
     <div id="snow-container"></div>
